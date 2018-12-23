@@ -33,13 +33,19 @@
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
         </property>
-        <property name="annotatedClasses">
+        <property name="packagesToScan">
             <list>
-                <value>com.entity.Employee</value>
-                <value>com.entity.Department</value>
-                <value>com.entity.UploadFile</value>
+                <value>com.entity</value>
             </list>
         </property>
+        <!--<property name="annotatedClasses">-->
+            <!--<list>-->
+                <!--<value>com.entity.Employee</value>-->
+                <!--<value>com.entity.Department</value>-->
+                <!--<value>com.entity.UploadFile</value>-->
+                <!--<value>com.entity.Folder</value>-->
+            <!--</list>-->
+        <!--</property>-->
     </bean>
 
     <!--<bean id="employeeAction" class="com.action.EmployeeAction" scope="prototype">-->

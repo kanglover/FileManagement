@@ -1,40 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE struts PUBLIC
-        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-        "http://struts.apache.org/dtds/struts-2.5.dtd">
+        "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+        "http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
     <!-- 指定由spring负责action对象的创建 -->
-    <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.objectFactory" value="spring"/>
     <!-- 所有匹配*.action的请求都由struts2处理 -->
-    <constant name="struts.action.extension" value="action" />
+    <constant name="struts.action.extension" value="action"/>
     <!-- 是否启用开发模式 -->
-    <constant name="struts.devMode" value="true" />
-    <!-- struts配置文件改动后，是否重新加载 -->
-    <constant name="struts.configuration.xml.reload" value="true" />
-    <!-- 设置浏览器是否缓存静态内容 -->
-    <constant name="struts.serve.static.browserCache" value="false" />
+    <constant name="struts.devMode" value="true"/>
     <!-- 请求参数的编码方式 -->
-    <constant name="struts.i18n.encoding" value="UTF-8" />
-    <!-- 每次HTTP请求系统都重新加载资源文件，有助于开发 -->
-    <constant name="struts.i18n.reload" value="true" />
+    <constant name="struts.i18n.encoding" value="UTF-8"/>
     <!-- 文件上传最大值 -->
-    <constant name="struts.multipart.maxSize" value="104857600" />
-    <!-- 让struts2支持动态方法调用 -->
-    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
-    <!-- Action名称中是否还是用斜线 -->
-    <constant name="struts.enable.SlashesInActionNames" value="false" />
-    <!-- 允许标签中使用表达式语法 -->
-    <constant name="struts.tag.altSyntax" value="true" />
-    <!-- 对于WebLogic,Orion,OC4J此属性应该设置成true -->
-    <constant name="struts.dispatcher.parametersWorkaround" value="false" />
+    <constant name="struts.multipart.maxSize" value="104857600"/>
 
     <package name="default" namespace="/" extends="struts-default">
+        <interceptors>
+            <interceptor name="OperatingInterceptor" class="com.interceptor.OperatingInterceptor"/>
+            <!-- 拦截器栈 -->
+            <interceptor-stack name="interceptorStack">
+                <interceptor-ref name="OperatingInterceptor"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="interceptorStack"/>
+
         <!--验证登录用户信息  -->
         <action name="login" class="com.action.EmployeeAction" method="login">
-            <result name="success">/homePage.jsp</result>
+            <result name="success" type="redirectAction">findFolders</result>
             <result name="input">/index.jsp</result>
+        </action>
+
+        <action name="addFolder" class="com.action.FolderAction" method="addFolder">
+            <result name="success">/homePage.jsp</result>
+        </action>
+
+        <action name="findFolders" class="com.action.FolderAction" method="findFolders">
+            <result name="success">/homePage.jsp</result>
+        </action>
+
+        <action name="createFile" class="com.action.FileAction" method="createFile">
+            <result name="success">/homePage.jsp</result>
+        </action>
+
+        <action name="findFiles" class="com.action.FileAction" method="findFiles">
+            <result name="success">/table.jsp</result>
+        </action>
+
+        <action name="turnPage" class="com.action.FileAction" method="turnPage">
+            <result name="success">/table.jsp</result>
+        </action>
+
+        <action name="findFile" class="com.action.FileAction" method="findFile">
+            <result name="success">/table.jsp</result>
+        </action>
+
+        <action name="deleteFile" class="com.action.FileAction" method="deleteFile">
+            <result name="success" type="redirectAction">findFiles</result>
+        </action>
+
+        <action name="deleteFiles" class="com.action.FileAction" method="deleteFiles">
+            <result name="success" type="redirectAction">findFiles</result>
+        </action>
+
+        <action name="updateFile" class="com.action.FileAction" method="updateFile">
+            <result name="success" type="redirectAction">findFiles</result>
+        </action>
+
+        <action name="preSearch" class="com.action.FileAction" method="preSearch">
+            <result name="success">/search.jsp</result>
+        </action>
+
+        <action name="searchFiles" class="com.action.FileAction" method="searchFiles">
+            <result name="success">/table.jsp</result>
+        </action>
+
+        <action name="fileUpload" class="com.action.FileAction" method="fileUpload">
+            <result name="success">/homePage.jsp</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">application/msword,application/pdf,application/vnd.ms-excel,text/plain,image/bmp,image/x-png,image/jpeg,image/gif,image/jpg</param>
+                <param name="allowedExtensions">txt,doc,xls,ppt,jpg,png</param>
+            </interceptor-ref>
+        </action>
+
+        <action name="fileDownload" class="com.action.DownLoadFileAction">
+            <result name="success" type="stream">
+                <param name="contentType">
+                    application/octet-stream;charset=UTF-8
+                </param>
+                <!--第一个参数：弹出下载框。第二个参数 ：动态获取下载文件的名字 -->
+                <param name="contentDisposition">
+                    attachment;filename="${downloadFileName}"
+                </param>
+                <param name="inputName">inputStream</param>
+                <param name="bufferSize">4096</param>
+            </result>
+        </action>
+
+
+        <action name="downloadMoreFile" class = "com.action.DownLoadFileAction" method="downloadMoreFile">
+            <result type="stream">
+                <param name="inputName">inputStreamAll</param>
+                <param name="bufferSize">4096</param>
+                <param name="contentDisposition">attachment;filename="${fileNameforAll}"</param>
+            </result>
+        </action>
+
+        <action name="findHistories" class="com.action.HistoryAction">
+            <result name="success">/history.jsp</result>
         </action>
     </package>
 </struts>

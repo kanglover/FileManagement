@@ -50,5 +50,7 @@
     <orderEntry type="library" name="c3p0:c3p0:0.9.1.2" level="project" />
     <orderEntry type="library" name="org.apache.struts:struts2-spring-plugin:2.0.6" level="project" />
     <orderEntry type="library" name="org.springframework:spring-web:4.3.18.RELEASE" level="project" />
+    <orderEntry type="library" name="struts2-spring-plugin-2.5.18" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>

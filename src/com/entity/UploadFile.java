@@ -1,6 +1,5 @@
 package com.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,7 +12,7 @@ public class UploadFile implements java.io.Serializable {
     @Column(name = "fid",nullable = false,unique = true)
 	private Integer fileId;
 
-    @Column(name = "file_name",nullable = false,unique=false)
+    @Column(name = "file_name",nullable = false,unique=true)
 	private String fileName;
 
     @Column(name = "file_size",nullable = false)
@@ -22,18 +21,18 @@ public class UploadFile implements java.io.Serializable {
     @Column(name = "file_type",nullable = false)
 	private String fileType;
 
-    @Column(name = "save_path",nullable = false)
-	private String savePath;
+    @OneToOne(targetEntity=Folder.class, cascade={CascadeType.REFRESH})
+    @JoinColumn(name = "folder",referencedColumnName = "folder_id")
+    private Folder folder;
 
-    @OneToOne
+    @OneToOne(targetEntity=Employee.class, cascade={CascadeType.REFRESH})
     @JoinColumn(name = "creator",referencedColumnName = "eid")
 	private Employee creator;
 
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_date", nullable = true)
 	private Date createDate;
 
-    @OneToOne
+    @OneToOne(targetEntity=Employee.class, cascade={CascadeType.REFRESH})
     @JoinColumn(name = "modifier",referencedColumnName = "eid")
     private Employee modifier;
 
@@ -76,14 +75,6 @@ public class UploadFile implements java.io.Serializable {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
-    }
-
-    public String getSavePath() {
-        return savePath;
-    }
-
-    public void setSavePath(String savePath) {
-        this.savePath = savePath;
     }
 
     public Employee getCreator() {
@@ -132,5 +123,13 @@ public class UploadFile implements java.io.Serializable {
 
     public void setKeywords(String keywords) {
         this.keywords = keywords;
+    }
+
+    public Folder getFolder() {
+        return folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 }

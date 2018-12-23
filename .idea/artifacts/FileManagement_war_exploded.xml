@@ -13,6 +13,7 @@
           <element id="library" level="project" name="mysql-connector-java-5.1.46" />
           <element id="library" level="project" name="c3p0:c3p0:0.9.1.2" />
           <element id="library" level="project" name="org.springframework:spring-web:4.3.18.RELEASE" />
+          <element id="library" level="project" name="struts2-spring-plugin-2.5.18" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="FileManagement/web/Web" />

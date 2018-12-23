@@ -2,9 +2,13 @@ package com.entity;
 
 public class PageDTO {
 
-    private Integer currentPage;
-    private Integer pageSize;
+    private Integer currentPage = 1;
+    private Integer pageSize = 10;
     private Integer startIndex;//分页开始下标
+    private Integer totalPage;
+    private Integer totalCount;
+
+    private Integer folderId;
 
 
     public Integer getCurrentPage() {
@@ -31,4 +35,27 @@ public class PageDTO {
         this.startIndex = startIndex;
     }
 
+    public Integer getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(Integer totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public Integer getFolderId() {
+        return folderId;
+    }
+
+    public void setFolderId(Integer folderId) {
+        this.folderId = folderId;
+    }
 }

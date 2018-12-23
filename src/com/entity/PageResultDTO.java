@@ -4,15 +4,15 @@ import java.util.List;
 
 public class PageResultDTO {
 
-    private Long totalCount;
+    private PageDTO pageDTO;
     private List<?> datas;
 
-    public Long getTotalCount() {
-        return totalCount;
+    public PageDTO getPageDTO() {
+        return pageDTO;
     }
 
-    public void setTotalCount(Long totalCount) {
-        this.totalCount = totalCount;
+    public void setPageDTO(PageDTO pageDTO) {
+        this.pageDTO = pageDTO;
     }
 
     public List<?> getDatas() {

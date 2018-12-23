@@ -22,4 +22,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
             return employees.get(0);
         }
     }
+
+    @Override
+    public List<Employee> findEmployees() {
+        String hql = "from Employee";
+        return (List<Employee>)hibernateTemplate.find(hql);
+    }
 }

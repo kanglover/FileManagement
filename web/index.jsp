@@ -22,11 +22,11 @@
         <s:fielderror cssStyle="color:red">
             <s:param>error</s:param>
         </s:fielderror>
-        <s:textfield name="account" label="账号"></s:textfield>
+        <s:textfield name="account" label="账号"/>
         <br/>
-        <s:password name="password" label="密码"></s:password>
+        <s:password name="password" label="密码"/>
         <br/>
-        <s:submit value="提交"></s:submit>
+        <s:submit value="提交"/>
     </s:form>
 </div>
 </body>
